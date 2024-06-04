@@ -5,12 +5,13 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Embeddable
 @Data
 public class CompositeKey implements Serializable {
 
-    private int integerKeyPart;
+    private UUID notNullKeyPart;
 
-    private LocalDateTime localDateTimeKeyPart;
+    private LocalDateTime nullKeyPart;
 }
