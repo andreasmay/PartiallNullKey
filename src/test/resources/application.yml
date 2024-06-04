@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: always
+      schema-locations:
+        - schema/EntityA.sql
+
+logging:
+  level:
+    de.mayandreas: DEBUG
+#   org.hibernate: TRACE
+#   org.hibernate.sql.results: TRACE
+#   org.hibernate.type.descriptor.sql.BasicBinder: TRACE # set to TRACE to enable logging of bound parameters
+#   org.springframework.jdbc.datasource.init.ScriptUtils: DEBUG
