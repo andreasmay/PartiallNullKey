@@ -9,6 +9,7 @@ import lombok.Data;
 @Entity
 @Data
 public class EntityA {
+
     @EmbeddedId
     private CompositeKey key;
 
