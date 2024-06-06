@@ -17,8 +17,16 @@ import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
+//@SpringBootTest
+//@Testcontainers
+//@Transactional
 @DataJpaTest
 class EntityARepositoryTest {
+
+    //    @Container
+    //    @ServiceConnection
+    //    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine").withDatabaseName("test")
+    //            .withUsername("test").withPassword("test");
 
     @Autowired
     private EntityARepository repo;
@@ -73,7 +81,7 @@ class EntityARepositoryTest {
     }
 
     @Nested
-    class FindById {
+    class FindByIdTests {
         @Test
         public void pkNullShouldBeFound() {
             // given
@@ -148,6 +156,24 @@ class EntityARepositoryTest {
             var entity = repo.findById(entityToDelete.getKey());
             assertFalse(entity.isPresent(), "Entity should not be present");
         }
+    }
+
+    @Nested
+    class InsertTests {
+        @Test
+        public void shouldInsertEntity() {
+            // given
+            var entityToInsert = generateEntityAWithNullKeyPart(true, 1).findFirst().orElseThrow();
+
+            // when
+            EntityA savedEntity = repo.save(entityToInsert);
+
+            // then
+            var entity = repo.findById(savedEntity.getKey());
+            assertAll(() -> assertTrue(entity.isPresent(), "Entity should be present"),
+                    () -> assertEquals(entityToInsert, entity.orElseThrow(), "Entity should be equal"));
+        }
+
     }
 
     private static Predicate<EntityA> nullKeyPartIsNull() {
